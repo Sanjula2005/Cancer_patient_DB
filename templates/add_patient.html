@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Patient</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Add Patient</h2>
+    <form method="POST">
+        <input type="text" name="name" placeholder="Patient Name" required>
+        <input type="number" name="age" placeholder="Age" required>
+        <select name="gender" required>
+            <option value="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+        <input type="text" name="contact" placeholder="Contact Number" required>
+        <input type="text" name="address" placeholder="Address" required>
+
+        <select name="doctor_id" required>
+            <option value="">Select Doctor</option>
+            {% for doc in doctors %}
+                <option value="{{ doc[0] }}">{{ doc[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="text" name="test_type" placeholder="Test Type" required>
+
+        <select name="diagnosis" required>
+            <option value="">Select Diagnosis</option>
+            <option value="Benign">Benign</option>
+            <option value="Malignant">Malignant</option>
+        </select>
+
+        <button type="submit">Add Patient</button>
+    </form>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

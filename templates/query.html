@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Query</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Search Medical Reports</h2>
+    <form method="POST">
+        <label>Doctor:</label>
+        <select name="doctor_id">
+            <option value="">All</option>
+            {% for doctor in doctors %}
+            <option value="{{ doctor[0] }}">{{ doctor[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Patient:</label>
+        <select name="patient_id">
+            <option value="">All</option>
+            {% for patient in patients %}
+            <option value="{{ patient[0] }}">{{ patient[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Search</button>
+    </form>
+
+    <h3>Results:</h3>
+    <table border="1">
+        <tr>
+            <th>Doctor</th>
+            <th>Patient</th>
+            <th>Diagnosis</th>
+            <th>Test Type</th>
+        </tr>
+        {% for report in reports %}
+        <tr>
+            <td>{{ report[0] }}</td>
+            <td>{{ report[1] }}</td>
+            <td>{{ report[2] }}</td>
+            <td>{{ report[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Custom SQL Query</h2>
+<form method="POST">
+    <textarea name="custom_sql" rows="5" cols="80" placeholder="Enter your SQL query here"></textarea><br>
+    <button type="submit">Execute</button>
+</form>
+
+{% if custom_results %}
+    <h3>Results:</h3>
+    <table border="1">
+        <tr>
+            {% for header in headers %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in custom_results %}
+            <tr>
+                {% for col in row %}
+                    <td>{{ col }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+    
+
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
